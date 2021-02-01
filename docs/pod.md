@@ -19,11 +19,13 @@ pod [flags]
 
 ### SEE ALSO
 
+* [pod custom](pod_custom.md)	 - Manage custom commands
 * [pod dart](pod_dart.md)	 - Dart runtime
 * [pod doc-gen](pod_doc-gen.md)	 - Generate markdown docs
 * [pod go](pod_go.md)	 - Golang language
 * [pod java](pod_java.md)	 - Java (OpenJDK) interpreter
 * [pod javac](pod_javac.md)	 - Java (OpenJDK) compiler
+* [pod mongo](pod_mongo.md)	 - MongoDB client
 * [pod node](pod_node.md)	 - Node.js interpreter
 * [pod npm](pod_npm.md)	 - Node.js package manager
 * [pod npx](pod_npx.md)	 - Node.js command-line tool

@@ -7,7 +7,6 @@ import (
 	"github.com/marioreggiori/pod/global"
 	"github.com/marioreggiori/pod/utils"
 	"github.com/spf13/cobra"
-	"github.com/spf13/cobra/doc"
 )
 
 var flags = &global.Flags{}
@@ -30,17 +29,6 @@ func init() {
 	rootCmd.Flags().StringArrayVarP(&flags.EnvVariables, "env", "e", nil, "set environment variable")
 	rootCmd.Flags().StringArrayVarP(&flags.MappedPorts, "port", "p", nil, "map port")
 	rootCmd.Flags().StringArrayVarP(&flags.MappedVolumes, "volume", "v", nil, "map volume")
-
-	rootCmd.AddCommand(&cobra.Command{
-		Use:   "doc-gen",
-		Short: "Generate markdown docs",
-		Run: func(cmd *cobra.Command, args []string) {
-			err := doc.GenMarkdownTree(rootCmd, "./docs")
-			if err != nil {
-				log.Fatal(err)
-			}
-		},
-	})
 }
 
 func Execute() {
