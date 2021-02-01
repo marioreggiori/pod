@@ -1,5 +1,6 @@
 package global
 
+// --verbose
 var isVerbose = false
 
 func IsVerbose() bool {
@@ -8,4 +9,15 @@ func IsVerbose() bool {
 
 func SetIsVerbose(state bool) {
 	isVerbose = state
+}
+
+// --tag
+var imageTag string
+
+func ImageTag() string {
+	return imageTag
+}
+
+func SetImageTag(tag string) {
+	imageTag = tag
 }

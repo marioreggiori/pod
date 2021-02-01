@@ -11,5 +11,5 @@ func init() {
 		WorkingDir: "/go/src/app",
 	}
 
-	rootCmd.AddCommand(cmd("go", opts))
+	rootCmd.AddCommand(cmd("go", "Golang language", opts))
 }

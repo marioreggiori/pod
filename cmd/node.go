@@ -11,7 +11,7 @@ func init() {
 		WorkingDir: "/usr/src/app",
 	}
 
-	rootCmd.AddCommand(cmd("node", opts))
-	rootCmd.AddCommand(cmd("npm", opts))
-	rootCmd.AddCommand(cmd("npx", opts))
+	rootCmd.AddCommand(cmd("node", "Node.js interpreter", opts))
+	rootCmd.AddCommand(cmd("npm", "Node.js package manager", opts))
+	rootCmd.AddCommand(cmd("npx", "Node.js command-line tool", opts))
 }

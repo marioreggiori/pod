@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -22,6 +23,7 @@ type RunWithDockerOptions struct {
 	Image      string
 	User       string
 	WorkingDir string
+	Tag        string
 }
 
 func (opts *RunWithDockerOptions) Validate() error {
@@ -38,8 +40,17 @@ func (opts *RunWithDockerOptions) Validate() error {
 	return nil
 }
 
-func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
+func (opts *RunWithDockerOptions) ImageWithTag() string {
+	res := opts.Image
+	if tagFromFlag := global.ImageTag(); tagFromFlag != "" {
+		res += ":" + tagFromFlag
+	} else if opts.Tag != "" {
+		res += ":" + opts.Tag
+	}
+	return res
+}
 
+func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 	if err := opts.Validate(); err != nil {
 		log.Fatal(err)
 	}
@@ -55,7 +66,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		panic(err)
 	}
 
-	reader, err := cli.ImagePull(ctx, opts.Image, types.ImagePullOptions{})
+	reader, err := cli.ImagePull(ctx, opts.ImageWithTag(), types.ImagePullOptions{})
 	if err != nil {
 		panic(err)
 	}
@@ -65,10 +76,15 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 	if global.IsVerbose() {
 		termFd, isTerm := term.GetFdInfo(os.Stderr)
 		jsonmessage.DisplayJSONMessagesStream(reader, os.Stderr, termFd, isTerm, nil)
+	} else {
+		_, err = ioutil.ReadAll(reader)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image:        opts.Image,
+		Image:        opts.ImageWithTag(),
 		Cmd:          cmd,
 		Tty:          true,
 		AttachStderr: true,

@@ -25,6 +25,7 @@ var rootCmd = &cobra.Command{
 	},
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		global.SetIsVerbose(verbose)
+		global.SetImageTag(imageTag)
 	},
 }
 
@@ -55,9 +56,10 @@ func Execute() {
 	}
 }
 
-func cmd(use string, opts *utils.RunWithDockerOptions) *cobra.Command {
+func cmd(use, desc string, opts *utils.RunWithDockerOptions) *cobra.Command {
 	return &cobra.Command{
 		Use:                use,
+		Short:              desc,
 		DisableFlagParsing: true,
 		Run: func(cmd *cobra.Command, args []string) {
 			utils.RunWithDocker(append([]string{use}, args...), opts)
