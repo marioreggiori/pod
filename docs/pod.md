@@ -20,7 +20,7 @@ pod [flags]
 ### SEE ALSO
 
 * [pod dart](pod_dart.md)	 - Dart runtime
-* [pod generate](pod_generate.md)	 - 
+* [pod doc-gen](pod_doc-gen.md)	 - Generate markdown docs
 * [pod go](pod_go.md)	 - Golang language
 * [pod java](pod_java.md)	 - Java (OpenJDK) interpreter
 * [pod javac](pod_javac.md)	 - Java (OpenJDK) compiler

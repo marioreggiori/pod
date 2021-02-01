@@ -40,4 +40,4 @@ alias pip2='pod -t 2.7 pip'
 ```
 
 ## Documentation
-Browse all available commands at [pod](docs/pod.md)
+Browse all available commands [here](docs/pod.md)

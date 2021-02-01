@@ -37,7 +37,8 @@ func init() {
 	rootCmd.Flags().StringArrayVarP(&mappedVolumes, "volume", "v", nil, "map volume")
 
 	rootCmd.AddCommand(&cobra.Command{
-		Use: "generate docs",
+		Use:   "doc-gen",
+		Short: "Generate markdown docs",
 		Run: func(cmd *cobra.Command, args []string) {
 			err := doc.GenMarkdownTree(rootCmd, "./docs")
 			if err != nil {
