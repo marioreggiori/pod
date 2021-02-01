@@ -37,6 +37,10 @@ alias pip='pod pip'
 alias python2='pod -t 2.7 python'
 alias pip2='pod -t 2.7 pip'
 ...
+
+# /bin/bash
+$ npm init
+$ python2 --version
 ```
 
 ## Documentation
