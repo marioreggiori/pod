@@ -10,11 +10,7 @@ import (
 	"github.com/spf13/cobra/doc"
 )
 
-var verbose bool
-var imageTag string
-var envVariables []string
-var mappedPorts []string
-var mappedVolumes []string
+var flags = &global.Flags{}
 
 var rootCmd = &cobra.Command{
 	Use:              "pod",
@@ -24,17 +20,16 @@ var rootCmd = &cobra.Command{
 		cmd.Help()
 	},
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		global.SetIsVerbose(verbose)
-		global.SetImageTag(imageTag)
+		flags.Set()
 	},
 }
 
 func init() {
-	rootCmd.Flags().BoolVar(&verbose, "verbose", false, "display additional output")
-	rootCmd.Flags().StringVarP(&imageTag, "tag", "t", "", "set image tag")
-	rootCmd.Flags().StringArrayVarP(&envVariables, "env", "e", nil, "set environment variable")
-	rootCmd.Flags().StringArrayVarP(&mappedPorts, "port", "p", nil, "map port")
-	rootCmd.Flags().StringArrayVarP(&mappedVolumes, "volume", "v", nil, "map volume")
+	rootCmd.Flags().BoolVar(&flags.Verbose, "verbose", false, "display additional output")
+	rootCmd.Flags().StringVarP(&flags.ImageTag, "tag", "t", "", "set image tag")
+	rootCmd.Flags().StringArrayVarP(&flags.EnvVariables, "env", "e", nil, "set environment variable")
+	rootCmd.Flags().StringArrayVarP(&flags.MappedPorts, "port", "p", nil, "map port")
+	rootCmd.Flags().StringArrayVarP(&flags.MappedVolumes, "volume", "v", nil, "map volume")
 
 	rootCmd.AddCommand(&cobra.Command{
 		Use:   "doc-gen",

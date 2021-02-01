@@ -1,23 +1,23 @@
 package global
 
-// --verbose
-var isVerbose = false
+var flags *Flags
+
+type Flags struct {
+	Verbose       bool
+	ImageTag      string
+	EnvVariables  []string
+	MappedPorts   []string
+	MappedVolumes []string
+}
+
+func (f *Flags) Set() {
+	flags = f
+}
 
 func IsVerbose() bool {
-	return isVerbose
+	return flags.Verbose
 }
-
-func SetIsVerbose(state bool) {
-	isVerbose = state
-}
-
-// --tag
-var imageTag string
 
 func ImageTag() string {
-	return imageTag
-}
-
-func SetImageTag(tag string) {
-	imageTag = tag
+	return flags.ImageTag
 }
