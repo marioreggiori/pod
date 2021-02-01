@@ -1,12 +1,5 @@
 # pod
-
-## Install
-### Linux
-- todo
-### Windows
-- todo
-### Mac
-- todo
+todo: intro
 
 ## Usage
 
@@ -42,6 +35,14 @@ alias pip2='pod -t 2.7 pip'
 $ npm init
 $ python2 --version
 ```
+
+## Install
+### Linux
+- todo
+### Windows
+- todo
+### Mac
+- todo
 
 ## Documentation
 Browse all available commands [here](docs/pod.md)
