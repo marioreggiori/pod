@@ -38,3 +38,6 @@ alias python2='pod -t 2.7 python'
 alias pip2='pod -t 2.7 pip'
 ...
 ```
+
+## Documentation
+Browse all available commands at [pod](docs/pod.md)

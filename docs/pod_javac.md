@@ -1,15 +1,15 @@
-## pod npm
+## pod javac
 
-Node.js package manager
+Java (OpenJDK) compiler
 
 ```
-pod npm [flags]
+pod javac [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for npm
+  -h, --help   help for javac
 ```
 
 ### SEE ALSO

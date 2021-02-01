@@ -1,15 +1,15 @@
-## pod npm
+## pod dart
 
-Node.js package manager
+Dart runtime
 
 ```
-pod npm [flags]
+pod dart [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for npm
+  -h, --help   help for dart
 ```
 
 ### SEE ALSO

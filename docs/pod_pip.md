@@ -1,15 +1,15 @@
-## pod npm
+## pod pip
 
-Node.js package manager
+Python package manager
 
 ```
-pod npm [flags]
+pod pip [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for npm
+  -h, --help   help for pip
 ```
 
 ### SEE ALSO

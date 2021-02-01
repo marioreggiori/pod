@@ -1,15 +1,15 @@
-## pod npm
+## pod pub
 
-Node.js package manager
+Dart package manager
 
 ```
-pod npm [flags]
+pod pub [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for npm
+  -h, --help   help for pub
 ```
 
 ### SEE ALSO

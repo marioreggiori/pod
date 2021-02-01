@@ -1,15 +1,15 @@
-## pod npm
+## pod java
 
-Node.js package manager
+Java (OpenJDK) interpreter
 
 ```
-pod npm [flags]
+pod java [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for npm
+  -h, --help   help for java
 ```
 
 ### SEE ALSO
