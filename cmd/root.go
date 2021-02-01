@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"log"
+	"strings"
 
 	"github.com/marioreggiori/pod/global"
 	"github.com/marioreggiori/pod/utils"
@@ -12,8 +13,12 @@ import (
 var flags = &global.Flags{}
 
 var rootCmd = &cobra.Command{
-	Use:              "pod [command]",
-	Short:            "Run your favorite commands using containers",
+	Use:   "pod [command]",
+	Short: "Run your favorite commands using containers",
+	Example: strings.Join([]string{
+		"pod -p 8080:80 npm start",
+		"pod npx create-react-app --template typescript",
+	}, "\n"),
 	TraverseChildren: true,
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
