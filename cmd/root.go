@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/marioreggiori/pod/global"
 	"github.com/marioreggiori/pod/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
@@ -21,6 +22,9 @@ var rootCmd = &cobra.Command{
 	TraverseChildren: true,
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
+	},
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		global.SetIsVerbose(verbose)
 	},
 }
 
