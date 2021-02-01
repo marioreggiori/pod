@@ -9,8 +9,8 @@ pod [command] [flags]
 ### Examples
 
 ```
-pod -p 8080:80 npm start
-pod npx create-react-app --template typescript
+pod --verbose -p 8080:80 -p 3000 npm start
+pod -v /local/path:/container/path npx create-react-app --template typescript
 ```
 
 ### Options

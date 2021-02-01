@@ -16,8 +16,8 @@ var rootCmd = &cobra.Command{
 	Use:   "pod [command]",
 	Short: "Run your favorite commands using containers",
 	Example: strings.Join([]string{
-		"pod -p 8080:80 npm start",
-		"pod npx create-react-app --template typescript",
+		"pod --verbose -p 8080:80 -p 3000 npm start",
+		"pod -v /local/path:/container/path npx create-react-app --template typescript",
 	}, "\n"),
 	TraverseChildren: true,
 	Run: func(cmd *cobra.Command, args []string) {
