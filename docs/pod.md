@@ -6,6 +6,13 @@ Run your favorite commands using containers
 pod [command] [flags]
 ```
 
+### Examples
+
+```
+pod -p 8080:80 npm start
+pod npx create-react-app --template typescript
+```
+
 ### Options
 
 ```
