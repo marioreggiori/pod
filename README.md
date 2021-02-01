@@ -37,12 +37,10 @@ $ python2 --version
 ```
 
 ## Install
-### Linux
-- todo
+### Linux & Mac (pod-Linux-x86_64 / pod-Darwin-x86_64)
+`sudo curl -L "https://github.com/marioreggiori/pod/releases/latest/download/pod-$(uname -s)-$(uname -m)" -o /usr/local/bin/pod`
 ### Windows
-- todo
-### Mac
-- todo
+todo
 
 ## Documentation
 Browse all available commands [here](docs/pod.md)
