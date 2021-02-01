@@ -12,7 +12,7 @@ import (
 var flags = &global.Flags{}
 
 var rootCmd = &cobra.Command{
-	Use:              "pod",
+	Use:              "pod [command]",
 	Short:            "Run your favorite commands using containers",
 	TraverseChildren: true,
 	Run: func(cmd *cobra.Command, args []string) {

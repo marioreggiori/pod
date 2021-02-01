@@ -3,7 +3,7 @@
 Run your favorite commands using containers
 
 ```
-pod [flags]
+pod [command] [flags]
 ```
 
 ### Options
