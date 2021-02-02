@@ -1,9 +1,21 @@
-.PHONY: all docs build
+#.PHONY: all docs build
+#
+#all: docs build
+#
+#docs:
+#	go run main.go doc-gen
+#
+#build: 
+#	go build -o app main.go
 
-all: docs build
+.PHONY: release $(TARGETS)
+TARGETS := linux/amd64 linux/arm64 windows/amd64
 
-docs:
-	go run main.go doc-gen
+temp = $(subst /, ,$@)
+os = $(word 1, $(temp))
+arch = $(word 2, $(temp))
 
-build: 
-	go build -o app main.go
+release: $(TARGETS)
+
+$(TARGETS):
+	GOOS=$(os) GOARCH=$(arch) go build -o 'build/pod-$(os)-$(arch)' main.go
