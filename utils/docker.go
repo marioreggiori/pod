@@ -142,7 +142,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 			for {
 				consoleReader := bufio.NewReaderSize(os.Stdin, 1)
 				input, _ := consoleReader.ReadByte()
-				if input == 3 { // ctl-c
+				if false /*input == 3*/ { // ctl-c
 					cli.ContainerRemove(context.Background(), resp.ID, types.ContainerRemoveOptions{
 						Force: true,
 					})

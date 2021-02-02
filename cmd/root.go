@@ -44,13 +44,17 @@ func Execute() {
 	}
 }
 
-func cmd(use, desc string, opts *utils.RunWithDockerOptions) *cobra.Command {
+func cmdWithAlias(alias, program, desc string, opts *utils.RunWithDockerOptions) *cobra.Command {
 	return &cobra.Command{
-		Use:                use,
+		Use:                alias,
 		Short:              desc,
 		DisableFlagParsing: true,
 		Run: func(cmd *cobra.Command, args []string) {
-			utils.RunWithDocker(append([]string{use}, args...), opts)
+			utils.RunWithDocker(append([]string{program}, args...), opts)
 		},
 	}
+}
+
+func cmd(program, desc string, opts *utils.RunWithDockerOptions) *cobra.Command {
+	return cmdWithAlias(program, program, desc, opts)
 }

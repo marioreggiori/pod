@@ -1,4 +1,4 @@
-.PHONY: release $(TARGETS)
+.PHONY: release $(TARGETS) docs
 TARGETS := linux/amd64 linux/arm64 windows/amd64 windows/arm darwin/amd64
 
 temp = $(subst /, ,$@)
@@ -9,3 +9,7 @@ release: $(TARGETS)
 
 $(TARGETS):
 	GOOS=$(os) GOARCH=$(arch) go build -o 'build/pod-$(os)-$(arch)' main.go
+
+
+docs:
+	go run main.go doc-gen
