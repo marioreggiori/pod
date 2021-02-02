@@ -82,6 +82,8 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		}
 	}
 
+	// todo map ports & volumes
+
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
 		Image:        opts.ImageWithTag(),
 		Cmd:          cmd,
