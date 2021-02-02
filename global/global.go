@@ -21,3 +21,11 @@ func IsVerbose() bool {
 func ImageTag() string {
 	return flags.ImageTag
 }
+
+func Mounts() []string {
+	return flags.MappedVolumes
+}
+
+func Ports() []string {
+	return flags.MappedPorts
+}
