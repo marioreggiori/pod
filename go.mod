@@ -15,5 +15,6 @@ require (
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.0.1 // indirect
 	github.com/spf13/cobra v1.1.1
+	go.etcd.io/bbolt v1.3.2
 	golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5
 )

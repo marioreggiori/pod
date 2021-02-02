@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"log"
 	"strings"
 
 	"github.com/marioreggiori/pod/global"
@@ -41,7 +40,7 @@ func Execute() {
 	defer cancel()
 
 	if err := rootCmd.ExecuteContext(ctx); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 }
 

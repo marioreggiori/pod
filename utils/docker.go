@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"os"
 
 	"github.com/docker/docker/api/types"
@@ -32,10 +31,10 @@ func (opts *RunWithDockerOptions) Validate() error {
 		return fmt.Errorf(missingOption, "Image")
 	}
 	if opts.User == "" {
-		return fmt.Errorf(missingOption, "User")
+		opts.User = "1000"
 	}
 	if opts.WorkingDir == "" {
-		return fmt.Errorf(missingOption, "WorkingDir")
+		opts.WorkingDir = "/usr/src/app"
 	}
 	return nil
 }
@@ -52,7 +51,7 @@ func (opts *RunWithDockerOptions) ImageWithTag() string {
 
 func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 	if err := opts.Validate(); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	dir, err := os.Getwd()

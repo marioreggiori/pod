@@ -3,6 +3,8 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/marioreggiori/pod/store"
+	"github.com/marioreggiori/pod/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +25,10 @@ func init() {
 		Example: "pod custom add npm node \"Node.js interpreter\"",
 		Args:    cobra.ExactArgs(3),
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println(args)
+			err := store.AddCustom(&store.Custom{Command: args[0], Image: args[1], Description: args[2]})
+			if err != nil {
+				panic(err)
+			}
 		},
 	}
 
@@ -32,7 +37,10 @@ func init() {
 		Short: "Remove custom command",
 		Args:  cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println(args)
+			err := store.RemoveCustom(args[0])
+			if err != nil {
+				panic(err)
+			}
 		},
 	}
 
@@ -40,4 +48,8 @@ func init() {
 	customCmd.AddCommand(removeCustomCmd)
 
 	rootCmd.AddCommand(customCmd)
+
+	for _, v := range store.GetCustom() {
+		rootCmd.AddCommand(cmd(v.Command, v.Description, &utils.RunWithDockerOptions{Image: v.Image}))
+	}
 }
