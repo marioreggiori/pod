@@ -20,7 +20,7 @@ $ pod -v /some/local/dir:/some/container/dir <command> --arg 42
 $ pod --verbose node --version
 ```
 
-### Setup aliases for commands
+### Setup aliases for commands (Linux & Mac)
 ```bash
 # ~/.bashrc
 alias node='pod node'
