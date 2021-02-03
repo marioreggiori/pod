@@ -26,6 +26,7 @@ pod -v /local/path:/container/path npx create-react-app --template typescript
 
 ### SEE ALSO
 
+* [pod Rscript](pod_Rscript.md)	 - R interpreter
 * [pod custom](pod_custom.md)	 - Manage custom commands
 * [pod dart](pod_dart.md)	 - Dart runtime
 * [pod doc-gen](pod_doc-gen.md)	 - Generate markdown docs
