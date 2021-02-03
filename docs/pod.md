@@ -33,6 +33,7 @@ pod -v /local/path:/container/path npx create-react-app --template typescript
 * [pod go](pod_go.md)	 - Golang language
 * [pod java](pod_java.md)	 - Java (OpenJDK) interpreter
 * [pod javac](pod_javac.md)	 - Java (OpenJDK) compiler
+* [pod julia](pod_julia.md)	 - julia runtime
 * [pod mongo](pod_mongo.md)	 - MongoDB client
 * [pod node](pod_node.md)	 - Node.js interpreter
 * [pod npm](pod_npm.md)	 - Node.js package manager
