@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/marioreggiori/pod/store"
 	"github.com/marioreggiori/pod/utils"
 	"github.com/spf13/cobra"
@@ -14,8 +12,6 @@ func init() {
 		Short: "Manage custom commands",
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
-			// todo: list custom commands
-			fmt.Println("<list of custom commands>")
 		},
 	}
 
