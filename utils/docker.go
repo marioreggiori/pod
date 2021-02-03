@@ -29,6 +29,7 @@ type RunWithDockerOptions struct {
 	DisableWorkdirMount bool
 }
 
+// validate & default container options
 func (opts *RunWithDockerOptions) Validate() error {
 	missingOption := "Option [%s] is missing!"
 	if opts.Image == "" {
@@ -54,21 +55,26 @@ func (opts *RunWithDockerOptions) ImageWithTag() string {
 }
 
 func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
+	// validate RunWithDockerOptions
 	if err := opts.Validate(); err != nil {
 		panic(err)
 	}
 
+	// get local workdir for .:/path/to/workdir mount
 	dir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
 	ctx := context.Background()
+
+	// create docker client
 	cli, err := client.NewEnvClient()
 	if err != nil {
 		panic(err)
 	}
 
+	// pull image
 	reader, err := cli.ImagePull(ctx, opts.ImageWithTag(), types.ImagePullOptions{})
 	if err != nil {
 		panic(err)
@@ -76,6 +82,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 
 	defer reader.Close()
 
+	// hide image pull output when not verbose
 	if global.IsVerbose() {
 		termFd, isTerm := term.GetFdInfo(os.Stderr)
 		jsonmessage.DisplayJSONMessagesStream(reader, os.Stderr, termFd, isTerm, nil)
@@ -86,30 +93,13 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		}
 	}
 
-	// todo map ports
-	portMap := nat.PortMap{}
-	portSet := nat.PortSet{}
-	for _, v := range global.Ports() {
-		portParts := strings.Split(v, ":")
-		var port nat.Port
+	// generate exported & binded ports
+	exposedPorts, portBindings, err := nat.ParsePortSpecs(global.Ports())
 
-		binding := []nat.PortBinding{{HostIP: "0.0.0.0", HostPort: portParts[0]}}
-
-		portString := portParts[0]
-
-		if len(portParts) == 2 {
-			portString = portParts[1]
-		}
-
-		port, err := nat.NewPort("tcp", portString)
-		if err != nil {
-			panic(err)
-		}
-		portSet[port] = struct{}{}
-		portMap[port] = binding
-	}
-
+	// generate config
 	mounts := []mount.Mount{}
+
+	// mount current dir to workdir (if not explicitly disabled)
 	if !opts.DisableWorkdirMount {
 		mounts = append(mounts, mount.Mount{
 			Type:   mount.TypeBind,
@@ -118,6 +108,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		})
 	}
 
+	// mount volumes from -v flags
 	for _, v := range global.Mounts() {
 		mountParts := strings.Split(v, ":")
 		if len(mountParts) != 2 {
@@ -127,7 +118,6 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		if err != nil {
 			panic(err)
 		}
-
 		mounts = append(mounts, mount.Mount{
 			Type:   mount.TypeBind,
 			Source: localPath,
@@ -135,6 +125,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		})
 	}
 
+	// create container
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
 		Image:        opts.ImageWithTag(),
 		Cmd:          cmd,
@@ -145,11 +136,12 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		AttachStderr: true,
 		WorkingDir:   opts.WorkingDir,
 		User:         opts.User,
-		ExposedPorts: portSet,
+		ExposedPorts: exposedPorts,
+		Env:          global.EnvVariables(),
 	}, &container.HostConfig{
 		AutoRemove:   true,
 		Mounts:       mounts,
-		PortBindings: portMap,
+		PortBindings: portBindings,
 	}, nil, nil, "")
 	if err != nil {
 		panic(err)
@@ -159,6 +151,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		Force: true,
 	})
 
+	// attach stdin/out/err to container
 	waiter, err := cli.ContainerAttach(ctx, resp.ID, types.ContainerAttachOptions{
 		Stream: true,
 		Stdin:  true,
@@ -177,6 +170,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		panic(err)
 	}
 
+	// terminal io-passthrough to container
 	fd := int(os.Stdin.Fd())
 	var oldState *terminal.State
 	if terminal.IsTerminal(fd) {
@@ -199,6 +193,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		}()
 	}
 
+	// wait until container shut down
 	statusCh, errCh := cli.ContainerWait(context.Background(), resp.ID, container.WaitConditionNotRunning)
 	select {
 	case err := <-errCh:
@@ -208,8 +203,8 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 	case <-statusCh:
 	}
 
+	// deattach io from container
 	if terminal.IsTerminal(fd) {
 		terminal.Restore(fd, oldState)
 	}
-
 }

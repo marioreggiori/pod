@@ -1,4 +1,4 @@
-.PHONY: release $(TARGETS) docs
+.PHONY: all release $(TARGETS) docs
 TARGETS := linux/amd64 linux/arm64 windows/amd64 windows/arm darwin/amd64
 
 temp = $(subst /, ,$@)
@@ -13,3 +13,6 @@ $(TARGETS):
 
 docs:
 	go run main.go doc-gen
+
+
+all: docs release

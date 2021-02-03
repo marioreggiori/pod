@@ -22,7 +22,7 @@ func init() {
 	var addCustomCmd = &cobra.Command{
 		Use:     "add [command] [image] [description]",
 		Short:   "Add custom command",
-		Example: "pod custom add npm node \"Node.js interpreter\"",
+		Example: "pod custom add npm node \"Node.js package manager\"",
 		Args:    cobra.ExactArgs(3),
 		Run: func(cmd *cobra.Command, args []string) {
 			err := store.AddCustom(&store.Custom{Command: args[0], Image: args[1], Description: args[2]})

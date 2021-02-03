@@ -29,3 +29,7 @@ func Mounts() []string {
 func Ports() []string {
 	return flags.MappedPorts
 }
+
+func EnvVariables() []string {
+	return flags.EnvVariables
+}
