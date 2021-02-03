@@ -142,6 +142,7 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 		ExposedPorts: exposedPorts,
 		Env:          global.EnvVariables(),
 	}, &container.HostConfig{
+		NetworkMode:  "host",
 		AutoRemove:   true,
 		Mounts:       mounts,
 		PortBindings: portBindings,
