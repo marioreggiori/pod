@@ -95,6 +95,9 @@ func RunWithDocker(cmd []string, opts *RunWithDockerOptions) {
 
 	// generate exported & binded ports
 	exposedPorts, portBindings, err := nat.ParsePortSpecs(global.Ports())
+	if err != nil {
+		panic(err)
+	}
 
 	// generate config
 	mounts := []mount.Mount{}
